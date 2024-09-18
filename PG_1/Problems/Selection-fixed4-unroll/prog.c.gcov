@@ -1,0 +1,113 @@
+        -:    0:Source:prog.c
+        -:    0:Graph:prog.gcno
+        -:    0:Data:prog.gcda
+        -:    0:Runs:5
+        -:    1:// Selection Sort
+        -:    2:#include <stdio.h>
+        -:    3:#include <stdlib.h>
+        -:    4:
+        -:    5:
+        -:    6:// swaps two numbers
+        9:    7:void swap(float* arr, int i, int j){
+        9:    8:	float temp = arr[i];
+        9:    9:	arr[i] = arr[j];
+        9:   10:	arr[j]= temp;
+        9:   11:}
+        -:   12:
+        -:   13:// sorting algorythm, inspired by geeks for geeks
+        3:   14:void selectionSort(float arr[], int n){
+        -:   15:    
+        3:   16:	float min = arr[0];
+        3:   17:	int min_id = 0;
+        -:   18:
+        -:   19:	// UNROLLED
+        3:   20:	if(min > arr[1]){
+        1:   21:		min = arr[1];
+        1:   22:		min_id = 1;
+        -:   23:	}
+        -:   24:
+        3:   25:	if(min > arr[2]){
+        1:   26:		min = arr[2];
+        1:   27:		min_id = 2;
+        -:   28:	}
+        -:   29:
+        3:   30:	if(min > arr[3]){
+        1:   31:		min = arr[3];
+        1:   32:		min_id = 3;
+        -:   33:	}
+        -:   34:
+        3:   35:	swap(arr,0,min_id);
+        -:   36:
+        3:   37:	min = arr[1];
+        3:   38:	min_id = 1;
+        -:   39:
+        3:   40:	if(min > arr[2]){
+        1:   41:		min = arr[2];
+        1:   42:		min_id = 2;
+        -:   43:	}
+        -:   44:
+        3:   45:	if(min > arr[3]){
+        1:   46:		min = arr[3];
+        1:   47:		min_id = 3;
+        -:   48:	}
+        -:   49:
+        3:   50:	swap(arr,1,min_id);
+        3:   51:	min = arr[2];
+        3:   52:	min_id = 2;
+        3:   53:	if(min > arr[3]){
+        2:   54:		min = arr[3];
+        2:   55:		min_id = 3;
+        -:   56:	}
+        -:   57:
+        3:   58:	swap(arr,2,min_id);
+        -:   59:
+        -:   60:	
+        -:   61:
+        -:   62:    
+        3:   63:}
+        -:   64:
+        -:   65:
+        5:   66:int main(int argc, char *argv[]){
+        -:   67:	// checks if missing arguments
+        5:   68:	if(argc < 3){
+        2:   69:		printf("need more contents in command line");
+        2:   70:		exit(0);
+        -:   71:	}
+        -:   72:	// opens files
+        3:   73:	FILE *in_file = fopen(argv[1], "r");
+        3:   74:	FILE *out_file = fopen(argv[2], "w");
+        -:   75:
+        -:   76:	
+        -:   77:	
+        3:   78:	int size = 4;
+        -:   79:	
+        3:   80:	float* nums = (float*)malloc(size * sizeof(float));
+        -:   81:	// fills the array whit the contents of the file
+        -:   82:	char text[100];
+        -:   83:	
+       15:   84:	for(int i = 0; i < size; i++){
+       12:   85:		fgets(text,100,in_file);
+       12:   86:		nums[i]= atof(text);
+        -:   87:	}
+        -:   88:	
+        -:   89:	
+        3:   90:	fclose(in_file);
+        -:   91:
+        3:   92:    int n = size ;
+        -:   93:	// sorts the array
+        3:   94:	selectionSort(nums,n);
+        -:   95:	// makes the outfile
+        -:   96:
+       15:   97:	for(int i = 0; i < size; i++){
+       12:   98:		fprintf(out_file, "%.1f\n", nums[i]);
+        -:   99:	}
+        -:  100:
+        -:  101:
+        3:  102:	fclose(out_file);
+        3:  103:	free(nums);
+        -:  104:	
+        3:  105:	return 0;
+        -:  106:
+        -:  107:
+        -:  108:
+        -:  109:}

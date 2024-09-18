@@ -1,0 +1,112 @@
+        -:    0:Source:prog.c
+        -:    0:Graph:prog.gcno
+        -:    0:Data:prog.gcda
+        -:    0:Runs:3
+        -:    1:// Merge Sort
+        -:    2:#include <stdio.h>
+        -:    3:#include <stdlib.h>
+        -:    4:
+        -:    5:// merges two arrays
+        4:    6:void merge(float arr[], int l, int m, int r){
+        -:    7:    int i, j, k;
+        4:    8:    int n1 = m - l +1;
+        4:    9:    int n2 = r-m;
+        -:   10:
+        -:   11:    //temp arrays
+        4:   12:    float L[n1], R[n2];
+        -:   13:
+        -:   14:    //coppy data to temp arrays
+       11:   15:    for(i = 0; i <n1; i++){
+        7:   16:        L[i]= arr[l +i];
+        -:   17:    }
+        9:   18:    for(j = 0; j <n2; j++){
+        5:   19:        R[j] = arr[m+1+j];
+        -:   20:    }
+        -:   21:
+        -:   22:    //merge back
+        4:   23:    i = 0;
+        4:   24:    j = 0;
+        4:   25:    k = l;
+       11:   26:    while(i<n1 && j < n2){
+        7:   27:        if(L[i] < R[j]){
+        5:   28:            arr[k] = L[i];
+        5:   29:            i++;
+        -:   30:        }
+        -:   31:        else{
+        2:   32:            arr[k] = R[j];
+        2:   33:            j++;
+        -:   34:        }
+        7:   35:        k++;
+        -:   36:    }
+        -:   37:
+        -:   38:    // coppy remaining if any
+        6:   39:    while (i < n1){
+        2:   40:        arr[k] = L[i];
+        2:   41:        i++;
+        2:   42:        k++;
+        -:   43:    }
+        7:   44:    while(j < n2){
+        3:   45:        arr[k] = R[j];
+        3:   46:        j++;
+        3:   47:        k++;
+        -:   48:    }
+        -:   49:
+        4:   50:}
+        -:   51:
+        -:   52://sorting algorythm, inspired by geeks for geeks.
+        9:   53:void mergeSort(float arr[], int l, int r){
+        9:   54:    if(l < r){
+        4:   55:        int m = l + (r-l) /2;
+        4:   56:        mergeSort(arr,l,m);
+        4:   57:        mergeSort(arr,m+1,r);
+        -:   58:
+        4:   59:        merge(arr,l,m,r);
+        -:   60:    }
+        9:   61:}
+        -:   62:
+        3:   63:int main(int argc, char *argv[]){
+        -:   64:
+        -:   65:    //checks if missing arguments
+        3:   66:	if(argc < 3){
+        2:   67:		printf("need more contents in command line");
+        2:   68:		exit(0);
+        -:   69:	}
+        -:   70:	
+        1:   71:	FILE *in_file = fopen(argv[1], "r");
+        1:   72:	FILE *out_file = fopen(argv[2], "w");
+        -:   73:
+        -:   74:	
+        -:   75:	
+        1:   76:	int size = getc(in_file) - '0';
+        -:   77:	
+        1:   78:	float* nums = (float*)malloc(size * sizeof(float));
+        -:   79:    // fills the array from what is in the files
+        -:   80:	char text[100];
+        1:   81:	fgets(text,100,in_file);
+        6:   82:	for(int i = 0; i < size; i++){
+        5:   83:		fgets(text,100,in_file);
+        5:   84:		nums[i]= atof(text);
+        -:   85:	}
+        -:   86:	
+        -:   87:	
+        1:   88:	fclose(in_file);
+        -:   89:
+        1:   90:    int n = size ;
+        -:   91:    // sorts the numbers
+        1:   92:	mergeSort(nums,0,n-1);
+        -:   93:
+        -:   94:    //makes the out file.
+        1:   95:	fprintf(out_file,"%i\n",size );
+        6:   96:	for(int i = 0; i < size; i++){
+        5:   97:		fprintf(out_file, "%f\n", nums[i]);
+        -:   98:	}
+        -:   99:
+        -:  100:
+        1:  101:	fclose(out_file);
+        1:  102:	free(nums);
+        -:  103:	
+        1:  104:	return 0;
+        -:  105:
+        -:  106:
+        -:  107:
+        -:  108:}

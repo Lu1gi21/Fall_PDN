@@ -1,0 +1,132 @@
+        -:    0:Source:prog.c
+        -:    0:Graph:prog.gcno
+        -:    0:Data:prog.gcda
+        -:    0:Runs:5
+        -:    1:// Selection Sort
+        -:    2:#include <stdio.h>
+        -:    3:#include <stdlib.h>
+        -:    4:
+        -:    5:
+        -:    6:
+        -:    7:// sorting algorythm, inspired by geeks for geeks
+        3:    8:void selectionSort(float arr[], int n){
+        -:    9:	float min, max;
+        -:   10:	
+        -:   11:    //unroll no condition
+        -:   12:
+        3:   13:	int min_id = 0;
+        -:   14:    // first pass
+        3:   15:	typeof(arr[0]) a = (arr[0]);
+        3:   16:	typeof(arr[1]) b = (arr[1]);
+        -:   17:
+        3:   18:	min = !(a > b) * a + (a > b) * b ;
+        3:   19:    max =  (a > b) * a + !(a > b) * b ;
+        3:   20:	arr[0] = min;
+        3:   21:	arr[1] = max;
+        3:   22:	min = 0;
+        3:   23:	max = 0;
+        -:   24:	
+        -:   25:
+        3:   26:	a = (arr[0]);
+        3:   27:	b = (arr[2]);
+        -:   28:
+        3:   29:	min = !(a > b) * a + (a > b) * b ;
+        3:   30:    max =  (a > b) * a + !(a > b) * b ;
+        3:   31:	arr[0] = min;
+        3:   32:	arr[2] = max;
+        3:   33:	min = 0;
+        3:   34:	max = 0;
+        -:   35:
+        3:   36:	a = (arr[0]);
+        3:   37:	b = (arr[3]);
+        -:   38:
+        3:   39:	min = !(a > b) * a + (a > b) * b ;
+        3:   40:    max =  (a > b) * a + !(a > b) * b ;
+        3:   41:	arr[0] = min;
+        3:   42:	arr[3] = max;
+        3:   43:	min = 0;
+        3:   44:	max = 0;
+        -:   45:
+        -:   46:	//second pass
+        -:   47:
+        3:   48:	a = (arr[1]);
+        3:   49:	b = (arr[2]);
+        -:   50:
+        3:   51:	min = !(a > b) * a + (a > b) * b ;
+        3:   52:    max =  (a > b) * a + !(a > b) * b ;
+        3:   53:	arr[1] = min;
+        3:   54:	arr[2] = max;
+        3:   55:	min = 0;
+        3:   56:	max = 0;
+        -:   57:	
+        3:   58:	a = (arr[1]);
+        3:   59:	b = (arr[3]);
+        -:   60:
+        3:   61:	min = !(a > b) * a + (a > b) * b ;
+        3:   62:    max =  (a > b) * a + !(a > b) * b ;
+        3:   63:	arr[1] = min;
+        3:   64:	arr[3] = max;
+        3:   65:	min = 0;
+        3:   66:	max = 0;
+        -:   67:
+        -:   68:	
+        -:   69:	//third pass
+        3:   70:	a = (arr[2]);
+        3:   71:	b = (arr[3]);
+        -:   72:
+       3*:   73:	min = !(a > b) * a + (a > b) * b ;
+       3*:   74:    max =  (a > b) * a + !(a > b) * b ;
+        3:   75:	arr[2] = min;
+        3:   76:	arr[3] = max;
+        3:   77:	min = 0;
+        3:   78:	max = 0;
+        -:   79:        
+        -:   80:
+        -:   81:    
+        3:   82:}
+        -:   83:
+        -:   84:
+        5:   85:int main(int argc, char *argv[]){
+        -:   86:	// checks if missing arguments
+        5:   87:	if(argc < 3){
+        2:   88:		printf("need more contents in command line");
+        2:   89:		exit(0);
+        -:   90:	}
+        -:   91:	// opens files
+        3:   92:	FILE *in_file = fopen(argv[1], "r");
+        3:   93:	FILE *out_file = fopen(argv[2], "w");
+        -:   94:
+        -:   95:	
+        -:   96:	
+        3:   97:	int size = 4;
+        -:   98:	
+        3:   99:	float* nums = (float*)malloc(size * sizeof(float));
+        -:  100:	// fills the array whit the contents of the file
+        -:  101:	char text[100];
+        -:  102:	
+       15:  103:	for(int i = 0; i < size; i++){
+       12:  104:		fgets(text,100,in_file);
+       12:  105:		nums[i]= atof(text);
+        -:  106:	}
+        -:  107:	
+        -:  108:	
+        3:  109:	fclose(in_file);
+        -:  110:
+        3:  111:    int n = size ;
+        -:  112:	// sorts the array
+        3:  113:	selectionSort(nums,n);
+        -:  114:	// makes the outfile
+        -:  115:
+       15:  116:	for(int i = 0; i < size; i++){
+       12:  117:		fprintf(out_file, "%.1f\n", nums[i]);
+        -:  118:	}
+        -:  119:
+        -:  120:
+        3:  121:	fclose(out_file);
+        3:  122:	free(nums);
+        -:  123:	
+        3:  124:	return 0;
+        -:  125:
+        -:  126:
+        -:  127:
+        -:  128:}

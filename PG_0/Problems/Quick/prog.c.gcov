@@ -1,0 +1,92 @@
+        -:    0:Source:prog.c
+        -:    0:Graph:prog.gcno
+        -:    0:Data:prog.gcda
+        -:    0:Runs:3
+        -:    1:
+        -:    2:// Quick Sort
+        -:    3:#include <stdio.h>
+        -:    4:#include <stdlib.h>
+        -:    5:
+        -:    6:// swap the numbers
+        6:    7:void swap(float* a, float*b){
+        6:    8:    float temp = *a;
+        6:    9:    *a = *b;
+        6:   10:    *b = temp;
+        6:   11:}
+        -:   12:
+        2:   13:int partition(float arr[], int low, int high){
+        -:   14:
+        -:   15:    //get the pivot
+        2:   16:    float pivot = arr[high];
+        -:   17:
+        -:   18:    // smaller elements index
+        2:   19:    int i = low-1;
+        -:   20:
+        -:   21:    //traverse the array and swap if true
+        8:   22:    for(int j = low; j <= high -1; j++){
+        6:   23:        if (arr[j] < pivot){
+        4:   24:            i++;
+        4:   25:            swap(&arr[i], &arr[j]);
+        -:   26:        }
+        -:   27:    }
+        -:   28:    
+        -:   29:    //move pivot and return
+        2:   30:    swap(&arr[i+1], &arr[high]);
+        2:   31:    return i+1;
+        -:   32:
+        -:   33:}
+        -:   34:
+        5:   35:void quickSort(float arr[], int low, int high){
+        5:   36:    if (low < high){
+        2:   37:        int partition_index = partition(arr,low,high);
+        -:   38:
+        -:   39:        //Recursive calls
+        2:   40:        quickSort(arr,low,partition_index -1);
+        2:   41:        quickSort(arr,partition_index +1, high);
+        -:   42:
+        -:   43:    }
+        -:   44:
+        5:   45:}
+        -:   46:
+        3:   47:int main(int argc, char *argv[]){
+        -:   48:
+        3:   49:	if(argc < 3){
+        2:   50:		printf("need more contents in command line");
+        2:   51:		exit(0);
+        -:   52:	}
+        -:   53:	
+        1:   54:	FILE *in_file = fopen(argv[1], "r");
+        1:   55:	FILE *out_file = fopen(argv[2], "w");
+        -:   56:
+        -:   57:	
+        -:   58:	
+        1:   59:	int size = getc(in_file) - '0';
+        -:   60:	
+        1:   61:	float* nums = (float*)malloc(size * sizeof(float));
+        -:   62:
+        -:   63:	char text[100];
+        1:   64:	fgets(text,100,in_file);
+        6:   65:	for(int i = 0; i < size; i++){
+        5:   66:		fgets(text,100,in_file);
+        5:   67:		nums[i]= atof(text);
+        -:   68:	}
+        -:   69:	
+        -:   70:	
+        1:   71:	fclose(in_file);
+        1:   72:    int n = size ;
+        1:   73:	quickSort(nums,0,n-1);
+        -:   74:
+        1:   75:	fprintf(out_file,"%i\n",size );
+        6:   76:	for(int i = 0; i < size; i++){
+        5:   77:		fprintf(out_file, "%f\n", nums[i]);
+        -:   78:	}
+        -:   79:
+        -:   80:
+        1:   81:	fclose(out_file);
+        1:   82:	free(nums);
+        -:   83:	
+        1:   84:	return 0;
+        -:   85:
+        -:   86:
+        -:   87:
+        -:   88:}

@@ -1,0 +1,67 @@
+        -:    0:Source:prog.c
+        -:    0:Graph:prog.gcno
+        -:    0:Data:prog.gcda
+        -:    0:Runs:3
+        -:    1:// histogram
+        -:    2:
+        -:    3:#include <stdio.h>
+        -:    4:#include <stdlib.h>
+        -:    5:
+        1:    6:int getMax(int arr[]){
+        1:    7:    int max =0;
+       27:    8:    for(int i = 0; i < 26; i++){
+       26:    9:        if( max < arr[i]){
+        1:   10:            max = arr[i];
+        -:   11:        }
+        -:   12:    }
+        1:   13:    return max;
+        -:   14:}
+        -:   15:
+        3:   16:int main(int argc, char *argv[]){
+        -:   17:
+        3:   18:	if(argc < 3){
+        2:   19:		printf("need more contents in command line");
+        2:   20:		exit(0);
+        -:   21:	}
+        -:   22:	
+        1:   23:	FILE *in_file = fopen(argv[1], "r");
+        1:   24:	FILE *out_file = fopen(argv[2], "w");
+        -:   25:
+        -:   26:	
+        1:   27:	int* alphabet = (int*) malloc(26 * sizeof(int));
+        -:   28:    int ch;
+        6:   29:    while((ch = getc(in_file))!= EOF){
+        5:   30:        alphabet[ch - 'a'] += 1;
+        -:   31:    }
+        -:   32:
+        1:   33:    int max = getMax(alphabet);
+        -:   34:    
+        3:   35:    for(int i = max; i > 0; i--){
+       54:   36:         for(int j = 0; j < 26; j++){
+       52:   37:            if(alphabet[j] == i){
+        5:   38:                fprintf(out_file,"x");
+        5:   39:                alphabet[j] -= 1;
+        -:   40:            }
+        -:   41:            else{
+       47:   42:                fprintf(out_file," ");
+        -:   43:            }
+        -:   44:        }
+        -:   45:        
+        2:   46:        fprintf(out_file,"\n");
+        -:   47:    }
+        1:   48:    fprintf(out_file,"__________________________\nabcdefghijklmnopqrstuvwxyz");
+        -:   49:    
+        -:   50:
+        -:   51:
+        -:   52:   
+        1:   53:    fclose(in_file);
+        1:   54:    free(alphabet);
+        1:   55:    fclose(out_file);
+        -:   56:    
+        -:   57:
+        -:   58:
+        -:   59:	
+        -:   60:
+        -:   61:
+        -:   62:
+        -:   63:}

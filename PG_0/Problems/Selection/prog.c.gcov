@@ -1,0 +1,78 @@
+        -:    0:Source:prog.c
+        -:    0:Graph:prog.gcno
+        -:    0:Data:prog.gcda
+        -:    0:Runs:3
+        -:    1:// Selection Sort
+        -:    2:#include <stdio.h>
+        -:    3:#include <stdlib.h>
+        -:    4:
+        -:    5:// swaps two numbers
+        2:    6:void swap(float* arr, int i, int j){
+        2:    7:	float temp = arr[i];
+        2:    8:	arr[i] = arr[j];
+        2:    9:	arr[j]= temp;
+        2:   10:}
+        -:   11:
+        -:   12:// sorting algorythm, inspired by geeks for geeks
+        1:   13:void selectionSort(float arr[], int n){
+        -:   14:    int i, j, min_idx;
+        -:   15:
+        -:   16:    //move bounds
+        5:   17:    for(i=0;i<n-1; i++){
+        4:   18:        min_idx = i;
+       14:   19:        for (j = i+1; j < n; j++){
+       10:   20:            if(arr[j] < arr[min_idx]){
+        2:   21:                min_idx = j;
+        -:   22:            }
+        -:   23:        }
+        4:   24:        if(min_idx != i)
+        2:   25:            swap(arr,min_idx,i);
+        -:   26:
+        -:   27:    }
+        1:   28:}
+        -:   29:
+        -:   30:
+        3:   31:int main(int argc, char *argv[]){
+        -:   32:	// checks if missing arguments
+        3:   33:	if(argc < 3){
+        2:   34:		printf("need more contents in command line");
+        2:   35:		exit(0);
+        -:   36:	}
+        -:   37:	// opens files
+        1:   38:	FILE *in_file = fopen(argv[1], "r");
+        1:   39:	FILE *out_file = fopen(argv[2], "w");
+        -:   40:
+        -:   41:	
+        -:   42:	
+        1:   43:	int size = getc(in_file) - '0';
+        -:   44:	
+        1:   45:	float* nums = (float*)malloc(size * sizeof(float));
+        -:   46:	// fills the array whit the contents of the file
+        -:   47:	char text[100];
+        1:   48:	fgets(text,100,in_file);
+        6:   49:	for(int i = 0; i < size; i++){
+        5:   50:		fgets(text,100,in_file);
+        5:   51:		nums[i]= atof(text);
+        -:   52:	}
+        -:   53:	
+        -:   54:	
+        1:   55:	fclose(in_file);
+        -:   56:
+        1:   57:    int n = size ;
+        -:   58:	// sorts the array
+        1:   59:	selectionSort(nums,n);
+        -:   60:	// makes the outfile
+        1:   61:	fprintf(out_file,"%i\n",size );
+        6:   62:	for(int i = 0; i < size; i++){
+        5:   63:		fprintf(out_file, "%f\n", nums[i]);
+        -:   64:	}
+        -:   65:
+        -:   66:
+        1:   67:	fclose(out_file);
+        1:   68:	free(nums);
+        -:   69:	
+        1:   70:	return 0;
+        -:   71:
+        -:   72:
+        -:   73:
+        -:   74:}

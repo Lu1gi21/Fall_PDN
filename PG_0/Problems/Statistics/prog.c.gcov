@@ -1,0 +1,110 @@
+        -:    0:Source:prog.c
+        -:    0:Graph:prog.gcno
+        -:    0:Data:prog.gcda
+        -:    0:Runs:3
+        -:    1:// statistics
+        -:    2:
+        -:    3:#include <stdio.h>
+        -:    4:#include <stdlib.h>
+        -:    5:#include <math.h>
+        -:    6:
+        -:    7:// finds minimum number
+        1:    8:float getMin(float arr[],int n){
+        1:    9:    float t = arr[0];
+        -:   10:
+        7:   11:    for(int i = 0; i < n; i++){
+        6:   12:        if(t > arr[i]){
+        1:   13:            t = arr[i];
+        -:   14:        }
+        -:   15:    }
+        1:   16:    return t;
+        -:   17:
+        -:   18:}
+        -:   19:// finds max number
+        1:   20:float getMax(float arr[],int n){
+        1:   21:    float t = arr[0];
+        -:   22:
+        7:   23:    for(int i = 0; i < n; i++){
+        6:   24:        if(t < arr[i]){
+        2:   25:            t = arr[i];
+        -:   26:        }
+        -:   27:    }
+        1:   28:    return t;
+        -:   29:
+        -:   30:}
+        -:   31:
+        -:   32:// finds average of an array
+        2:   33:float getAbv(float arr[], int n){
+        2:   34:    float sum = 0;
+       14:   35:    for(int i = 0; i <n; i++){
+       12:   36:        sum = sum+ arr[i];
+        -:   37:    }
+        2:   38:    return sum/n;
+        -:   39:}
+        -:   40:
+        -:   41:// finds the standard deviation
+        1:   42:float getStdv(float arr[], int n){
+        1:   43:    float mean = getAbv(arr,n);
+        1:   44:    float values = 0;
+        7:   45:    for(int i = 0; i <n; i++){
+        6:   46:        values += pow(arr[i]-mean,2);
+        -:   47:    }
+        -:   48:
+        1:   49:    float variance = values /n;
+        1:   50:    float standardDeviation = sqrt(variance);
+        1:   51:    return standardDeviation;
+        -:   52:
+        -:   53:}
+        -:   54:
+        -:   55:
+        -:   56:
+        3:   57:int main(int argc, char *argv[]){
+        -:   58:    // checks if there are missing arguments
+        3:   59:	if(argc < 3){
+        2:   60:		printf("need more contents in command line");
+        2:   61:		exit(0);
+        -:   62:	}
+        -:   63:	// opens files
+        1:   64:	FILE *in_file = fopen(argv[1], "r");
+        1:   65:	FILE *out_file = fopen(argv[2], "w");
+        -:   66:
+        -:   67:	
+        -:   68:	
+        1:   69:	int size = getc(in_file) - '0';
+        -:   70:	
+        1:   71:	float* nums = (float*)malloc(size * sizeof(float));
+        -:   72:    // fills array with contents of the file
+        -:   73:	char text[100];
+        1:   74:	fgets(text,100,in_file);
+        7:   75:	for(int i = 0; i < size; i++){
+        6:   76:		fgets(text,100,in_file);
+        6:   77:		nums[i]= atof(text);
+        -:   78:	}
+        -:   79:	
+        -:   80:	
+        1:   81:	fclose(in_file);
+        1:   82:    int n = size;
+        -:   83:    float min, max, abv, sd;
+        -:   84:    // makes the statistical equations
+        1:   85:    min = getMin(nums,n);
+        1:   86:    max = getMax(nums,n);
+        1:   87:    abv = getAbv(nums,n);
+        1:   88:    sd = getStdv(nums,n);
+        -:   89:
+        -:   90:    // makes the outfile
+        1:   91:	fprintf(out_file,"%i\n",size );
+        1:   92:    fprintf(out_file,"Min:%f\n", min);
+        1:   93:    fprintf(out_file,"Max:%f\n",max);
+        1:   94:    fprintf(out_file,"Avg:%f\n",abv);
+        1:   95:    fprintf(out_file,"Std:%f\n",sd);
+        -:   96:
+        -:   97:
+        -:   98:
+        1:   99:	fclose(out_file);
+        1:  100:	free(nums);
+        -:  101:	
+        1:  102:	return 0;
+        -:  103:
+        -:  104:
+        -:  105:
+        -:  106:}

@@ -1,0 +1,64 @@
+        -:    0:Source:prog.c
+        -:    0:Graph:prog.gcno
+        -:    0:Data:prog.gcda
+        -:    0:Runs:3
+        -:    1:// insetrion Sort
+        -:    2:#include <stdio.h>
+        -:    3:#include <stdlib.h>
+        -:    4:
+        1:    5:void insertionSort(float arr[], int n){
+        5:    6:    for(int i = 1; i < n; i++){
+        4:    7:        float key = arr[i];
+        4:    8:        int j = i -1;
+        -:    9:
+        6:   10:        while (j >=0 && arr[j] > key){
+        2:   11:            arr[j+1] = arr[j];
+        2:   12:            j= j-1;
+        -:   13:        }
+        4:   14:        arr[j+1] = key;
+        -:   15:    }
+        1:   16:}
+        -:   17:
+        3:   18:int main(int argc, char *argv[]){
+        -:   19:
+        3:   20:	if(argc < 3){
+        2:   21:		printf("need more contents in command line");
+        2:   22:		exit(0);
+        -:   23:	}
+        -:   24:	
+        1:   25:	FILE *in_file = fopen(argv[1], "r");
+        1:   26:	FILE *out_file = fopen(argv[2], "w");
+        -:   27:
+        -:   28:	
+        -:   29:	
+        1:   30:	int size = getc(in_file) - '0';
+        -:   31:	
+        1:   32:	float* nums = (float*)malloc(size * sizeof(float));
+        -:   33:
+        -:   34:	char text[100];
+        1:   35:	fgets(text,100,in_file);
+        6:   36:	for(int i = 0; i < size; i++){
+        5:   37:		fgets(text,100,in_file);
+        5:   38:		nums[i]= atof(text);
+        -:   39:	}
+        -:   40:	
+        -:   41:	
+        1:   42:	fclose(in_file);
+        -:   43:
+        1:   44:    int n = size ;
+        1:   45:	insertionSort(nums,n);
+        -:   46:
+        1:   47:	fprintf(out_file,"%i\n",size );
+        6:   48:	for(int i = 0; i < size; i++){
+        5:   49:		fprintf(out_file, "%f\n", nums[i]);
+        -:   50:	}
+        -:   51:
+        -:   52:
+        1:   53:	fclose(out_file);
+        1:   54:	free(nums);
+        -:   55:	
+        1:   56:	return 0;
+        -:   57:
+        -:   58:
+        -:   59:
+        -:   60:}
